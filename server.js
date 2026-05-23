@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const supabase = require('./db');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'conn-secret-key-change-in-production';
@@ -49,6 +50,23 @@ const usernameCheckLimiter = rateLimit({
 
 // Middleware
 app.use(cors());
+
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com", "https://cdnjs.cloudflare.com"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"],
+      frameAncestors: ["'self'"],
+      upgradeInsecureRequests: []
+    }
+  }
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 

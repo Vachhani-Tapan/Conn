@@ -649,4 +649,12 @@
       // fail silently
     }
   }
+
+  // ─── Live Preview Share Button ───
+  const previewShareBtn = document.getElementById('previewShareBtn');
+  if (previewShareBtn) {
+    previewShareBtn.addEventListener('click', function () {
+      window.open('/me', '_blank');
+    });
+  }
 })();
