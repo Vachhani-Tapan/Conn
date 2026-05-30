@@ -35,8 +35,13 @@
         return;
       }
 
-      btn.disabled = true;
-      btn.textContent = 'Signing in…';
+     btn.disabled = true;
+     btn.style.opacity = '0.7';
+     btn.style.cursor = 'not-allowed';
+          const btnContent = btn.querySelector('.btn-content');
+          const btnLoader = btn.querySelector('.btn-loader');
+          btnContent.style.display = 'none';
+          btnLoader.style.display = 'inline';
 
       try {
         const res = await fetch('/api/auth/login', {
@@ -49,7 +54,10 @@
         if (!res.ok) {
           showError(data.error || 'Login failed.');
           btn.disabled = false;
-          btn.textContent = 'Sign In';
+          btn.style.opacity = '1';
+          btn.style.cursor = 'pointer';
+          btnContent.style.display = 'flex';
+          btnLoader.style.display = 'none';
           return;
         }
 
@@ -57,7 +65,10 @@
       } catch (err) {
         showError('Network error. Please try again.');
         btn.disabled = false;
-        btn.textContent = 'Sign In';
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btnContent.style.display = 'flex';
+        btnLoader.style.display = 'none';
       }
     });
   }
@@ -277,7 +288,13 @@
       }
 
       btn.disabled = true;
-      btn.textContent = 'Creating account…';
+      btn.style.opacity = '0.7';
+      btn.style.cursor = 'not-allowed';
+      const btnContent = btn.querySelector('.btn-content');
+      const btnLoader = btn.querySelector('.btn-loader');
+
+btnContent.style.display = 'none';
+btnLoader.style.display = 'inline';
 
       try {
         const res = await fetch('/api/auth/register', {
@@ -290,7 +307,10 @@
         if (!res.ok) {
           showError(data.error || 'Registration failed.');
           btn.disabled = false;
-          btn.textContent = 'Create Account';
+          btn.style.opacity = '1';
+          btn.style.cursor = 'pointer';
+          btnContent.style.display = 'flex';
+          btnLoader.style.display = 'none';
           return;
         }
 
@@ -298,7 +318,10 @@
       } catch (err) {
         showError('Network error. Please try again.');
         btn.disabled = false;
-        btn.textContent = 'Create Account';
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btnContent.style.display = 'flex';
+        btnLoader.style.display = 'none';
       }
     });
   }
